@@ -1,7 +1,7 @@
 import express from "express";
 const app = express();
 import cors from "cors";
-import cookieparser from " cookie-parser";
+import cookieParser from "cookie-parser";
 
 app.use(cors({
     origin : process.env.cors_origin,
@@ -13,8 +13,17 @@ app.use(cors({
 app.use(express.json({limit : "10kb"}));
 app.use(express.urlencoded({extended : true , limit : "10kb"}));
 app.use(express.static("hitlic/public"));
-app.use(cookieparser());
-export {app}
+app.use(cookieParser());
+
+
+//ROUTES IMPORT 
+
+import userRouter from "./routes/user.routes.js"
+
+//declaration
+app.use("/api/v1/users",userRouter)
+
+export default app
 
 // url hit -> what to redirect -> (req,res)->res.send(xyz)
 //to check if you are authorized to access the url or not -> middleware -> next() -> controller -> res.send(xyz)
